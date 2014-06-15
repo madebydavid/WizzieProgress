@@ -1,0 +1,33 @@
+#config/doctrine/Model.User.dcm.yml
+Model\User:
+    type: entity
+    table: user
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        email:
+            type: string
+            length: 255
+            unique: true
+        password:
+            type: string
+            length: 255
+        salt:
+            type: string
+            length: 255
+        first_name:
+            type: string
+            length: 255
+            nullable: true
+        last_name:
+            type: string
+            length: 255
+            nullable: true
+        created:
+            type: datetime
+            columnDefinition: TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    lifecycleCallbacks:
+        prePersist: [ eraseCredentials ]

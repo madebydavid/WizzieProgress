@@ -1,0 +1,26 @@
+#config/doctrine/Model.Location.dcm.yml
+Model\Location:
+    type: entity
+    table: location
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        first_name:
+            type: string
+            length: 255
+            nullable: true
+        last_name:
+            type: string
+            length: 255
+            nullable: true
+        created:
+            type: datetime
+            columnDefinition: TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    oneToMany:
+        students:
+            targetEntity: Model\Student
+            mappedBy: location
+            cascade: [ "all" ]

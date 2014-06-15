@@ -1,0 +1,10 @@
+{% extends "common/base.twig" %}
+{% block styles %}<link href="{{ app.request.basepath }}/css/quiz-theme.css" rel="stylesheet" media="screen">{% endblock %}
+{% block content %}
+        <div class="quizHeader">
+            <h1 class="quizTitle">ERROR</h1>
+        </div>
+        <div class="quizMessage">
+            {{ errorMessage }}
+        </div>
+{% endblock %}

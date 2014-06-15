@@ -1,0 +1,17 @@
+        <div class="pagination pagination-right">
+            <ul>
+                {% if 0 == pageIndex %}
+                    <li class="disabled"><a href="#">&lt;</a></li>
+                {% else %}
+                    <li><a href="{{ path(app.request.attributes.get('_route'), app.request.query.all|merge({'pageIndex' : pageIndex -1})) }}">&lt;</a></li>
+                {% endif %}
+                {% for i in 0..maxPageIndex %}
+                    <li><a href="{{ path(app.request.attributes.get('_route'), app.request.query.all|merge({'pageIndex' : i})) }}">{{ i+1 }}</a></li>
+                {% endfor %}
+                {% if pageIndex == maxPageIndex %}
+                    <li class="disabled"><a href="#">&gt;</a></li>
+                {% else %}
+                    <li><a href="{{ path(app.request.attributes.get('_route'), app.request.query.all|merge({'pageIndex' : pageIndex +1})) }}">&gt;</a></li>
+                {% endif %}
+            </ul>
+        </div>

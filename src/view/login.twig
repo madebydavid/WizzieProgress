@@ -1,0 +1,34 @@
+{% extends "common/base.twig" %}
+{% block content %}
+
+            <form class="form-horizontal" action="{{ path('login_check') }}" method="post">
+              <fieldset>
+                <div id="legend">
+                  <legend class="">Login</legend>
+                </div>
+                {% if error %}
+                <div class="alert alert-error">
+                    <a class="close" data-dismiss="alert" href="#">&times;</a>{{ error }}
+                </div>
+                {% endif %}
+                <div class="control-group">
+                  <label class="control-label"  for="username">Username</label>
+                  <div class="controls">
+                    <input type="text" id="username" name="_username" placeholder="" class="input-xlarge" value="{{ lastUsername }}">
+                  </div>
+                </div>
+                <div class="control-group">
+                  <label class="control-label" for="password">Password</label>
+                  <div class="controls">
+                    <input type="password" id="password" name="_password" placeholder="" class="input-xlarge">
+                  </div>
+                </div>
+                <div class="control-group">
+                  <div class="controls">
+                    <input type="submit" class="btn btn-success" value="Login">
+                  </div>
+                </div>
+                </fieldset>
+            </form>
+
+{% endblock %}

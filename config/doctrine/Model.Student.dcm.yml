@@ -1,0 +1,32 @@
+#config/doctrine/Model.Student.dcm.yml
+Model\Student:
+    type: entity
+    table: student
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        first_name:
+            type: string
+            length: 255
+            nullable: true
+        last_name:
+            type: string
+            length: 255
+            nullable: true
+        created:
+            type: datetime
+            columnDefinition: TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    manyToOne:
+        created_by:
+            targetEntity: Model\User
+            joinColumn:
+                name: created_by
+                referencedColumnName: id
+        location_id:
+            targetEntity: Model\Location
+            joinColumn:
+                name: location_id
+                referencedColumnName: id

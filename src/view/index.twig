@@ -1,0 +1,12 @@
+{% extends "common/base.twig" %}
+{% block currentPage %}Index{% endblock %}
+{% block logout %}
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        <ul class="nav pull-right">
+            <li><a href="{{ path('login_logout') }}">Logout</a></li>
+        </ul>
+    {% endif %}
+{% endblock %}
+{% block content %}
+    <p>Please select an option fron the menu-bar</p>
+{% endblock %}
