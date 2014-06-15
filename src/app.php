@@ -18,7 +18,7 @@ $app->register(new Silex\Provider\TranslationServiceProvider(), array(
 
 $app->register(new Silex\Provider\TwigServiceProvider(), array(
     'twig.path' => __DIR__.'/view',
-    'twig.form.templates' => array('form_div_layout.html.twig', 'admin/common/form_div_layout.html.twig'),
+    'twig.form.templates' => array('form_div_layout.html.twig', 'common/form_div_layout.html.twig'),
 ));
 
 $app->register(new Dflydev\Silex\Provider\DoctrineOrm\DoctrineOrmServiceProvider, array(
@@ -74,9 +74,7 @@ $app['security.firewalls'] = array(
     )
 );
 
-$app['security.role_hierarchy'] = array(
-    'ROLE_ADMIN' => array('ROLE_USER', 'ROLE_ALLOWED_TO_SWITCH')
-);
+$app->register(new Silex\Provider\SecurityServiceProvider(array()));
 
 $app['security.access_rules'] = array(
     array('^/user(s)?', 'ROLE_ADMIN'),
@@ -86,7 +84,16 @@ $app['security.access_rules'] = array(
     array('^/.*', 'IS_AUTHENTICATED_ANONYMOUSLY')
 );
 
-$app->register(new Silex\Provider\SecurityServiceProvider(array()));
+$app['security.role_hierarchy'] = array(
+    'ROLE_ADMIN' => array('ROLE_USER', 'ROLE_ALLOWED_TO_SWITCH')
+);
+
+$app['security.encoder_factory'] = $app->share(function ($app) {
+    return new Symfony\Component\Security\Core\Encoder\EncoderFactory(array(
+        'Model\User' => $app['security.encoder.digest'],
+        'Symfony\Component\Security\Core\User\User' => $app['security.encoder.digest']
+    ));
+});
 
 $app->register(new Silex\Provider\HttpCacheServiceProvider(), array(
         'http_cache.cache_dir' => __DIR__.'/../cache/',

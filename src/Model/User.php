@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * User
  */
-class User
+class User implements \Symfony\Component\Security\Core\User\UserInterface
 {
     /**
      * @var integer
@@ -145,11 +145,12 @@ class User
     /**
      * Get roles
      *
-     * @return array 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getRoles()
     {
-        return $this->roles;
+        //return $this->roles;
+        return array('ROLE_USER');
     }
 
     /**
@@ -227,4 +228,9 @@ class User
     {
         // Add your code here
     }
+
+    public function getUsername() {
+        return $this->getEmail();
+    }
+
 }

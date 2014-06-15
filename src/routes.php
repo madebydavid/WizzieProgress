@@ -6,7 +6,7 @@ $app->mount('/login', new Controller\Login());
 $app->mount('/error', new Controller\Error());
 
 $app->mount('/users', new Controller\Users());
-//$app->mount('/user', new Controller\User());
+$app->mount('/user', new Controller\User());
 
 $app->mount('/students', new Controller\Students());
 //$app->mount('/student', new Controller\Student());
