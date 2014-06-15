@@ -30,6 +30,11 @@ class User
     private $salt;
 
     /**
+     * @var array
+     */
+    private $roles;
+
+    /**
      * @var string
      */
     private $first_name;
@@ -122,6 +127,29 @@ class User
     public function getSalt()
     {
         return $this->salt;
+    }
+
+    /**
+     * Set roles
+     *
+     * @param array $roles
+     * @return User
+     */
+    public function setRoles($roles)
+    {
+        $this->roles = $roles;
+    
+        return $this;
+    }
+
+    /**
+     * Get roles
+     *
+     * @return array 
+     */
+    public function getRoles()
+    {
+        return $this->roles;
     }
 
     /**

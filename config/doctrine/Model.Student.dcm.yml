@@ -12,9 +12,8 @@ Model\Student:
             type: string
             length: 255
             nullable: true
-        last_name:
-            type: string
-            length: 255
+        age:
+            type: integer
             nullable: true
         created:
             type: datetime

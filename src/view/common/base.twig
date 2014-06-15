@@ -13,12 +13,19 @@
                 <div class="navbar-inner">
                     <a class="brand" href="{{ url('index') }}">W2C3 Student Progress App</a>
                     <ul class="nav">
-                        <li{% if 'Quizzes' == block('currentPage') %} class="active"{% endif %}><a href="{{ url('users') }}">Users</a></li>
-                        <li{% if 'Images' == block('currentPage') %} class="active"{% endif %}><a href="{{ url('locations') }}">Locations</a></li>
-                        <li{% if 'Reports' == block('currentPage') %} class="active"{% endif %}><a href="{{ url('students') }}">Students</a></li>
-                    </ul>
-                     {% block logout %}{% endblock %}
-    
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <li{% if 'Users' == block('currentPage') %} class="active"{% endif %}><a href="{{ url('users') }}">Users</a></li>
+                            <li{% if 'Locations' == block('currentPage') %} class="active"{% endif %}><a href="{{ url('locations') }}">Locations</a></li>
+                        {% endif %}
+                        {% if is_granted('ROLE_USER') %}
+                            <li{% if 'Students' == block('currentPage') %} class="active"{% endif %}><a href="{{ url('students') }}">Students</a></li>
+                        {% endif %}
+                     </ul>
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                        <ul class="nav pull-right">
+                            <li><a href="{{ path('login_logout') }}">Logout</a></li>
+                        </ul>
+                    {% endif %}
                 </div>
             </div>
         {% endblock %}

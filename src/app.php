@@ -71,21 +71,20 @@ $app['security.firewalls'] = array(
     'login' => array(
         'pattern' => '^/login/?$',
         'anonymous' => true
-    ),
-    'error' => array(
-        'pattern' => '^/error/?$',
-        'anonymous' => true
-    ),
-    'images' => array(
-	   'pattern' => '^/img/.*$',
-	   'anonymous' => true
-    ),
-    'css' => array(
-        'pattern' => '^/css/.*$',
-        'anonymous' => true
-    ),
+    )
 );
 
+$app['security.role_hierarchy'] = array(
+    'ROLE_ADMIN' => array('ROLE_USER', 'ROLE_ALLOWED_TO_SWITCH')
+);
+
+$app['security.access_rules'] = array(
+    array('^/user(s)?', 'ROLE_ADMIN'),
+    array('^/location(s)', 'ROLE_ADMIN'),
+    array('^/student(s)', 'ROLE_USER'),
+    array('^/login', 'IS_AUTHENTICATED_ANONYMOUSLY'),
+    array('^/.*', 'IS_AUTHENTICATED_ANONYMOUSLY')
+);
 
 $app->register(new Silex\Provider\SecurityServiceProvider(array()));
 

@@ -18,6 +18,10 @@ Model\User:
         salt:
             type: string
             length: 255
+        roles:
+            type: array
+            length: 255
+            nullable: false
         first_name:
             type: string
             length: 255

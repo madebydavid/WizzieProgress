@@ -20,9 +20,9 @@ class Student
     private $first_name;
 
     /**
-     * @var string
+     * @var integer
      */
-    private $last_name;
+    private $age;
 
     /**
      * @var \DateTime
@@ -74,26 +74,26 @@ class Student
     }
 
     /**
-     * Set last_name
+     * Set age
      *
-     * @param string $lastName
+     * @param integer $age
      * @return Student
      */
-    public function setLastName($lastName)
+    public function setAge($age)
     {
-        $this->last_name = $lastName;
+        $this->age = $age;
     
         return $this;
     }
 
     /**
-     * Get last_name
+     * Get age
      *
-     * @return string 
+     * @return integer 
      */
-    public function getLastName()
+    public function getAge()
     {
-        return $this->last_name;
+        return $this->age;
     }
 
     /**
