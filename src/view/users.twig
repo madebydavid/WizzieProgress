@@ -20,7 +20,7 @@
                         <td>{{user.email}}</td>
                         <td>{{user.firstName}}</td>
                         <td>{{user.lastName}}</td>
-                        <td>{{user.roles}}</td>
+                        <td>{{user.roles[0].getRole}}</td>
                         <td>{{user.created|date("Y-m-d H:i:s")}}</td>
                         <td><a href="{{ url('user', {id: user.id}) }}">Edit</a></td>
                     </tr>

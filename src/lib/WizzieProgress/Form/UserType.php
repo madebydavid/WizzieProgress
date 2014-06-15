@@ -4,19 +4,21 @@ namespace WizzieProgress\Form {
     
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
-    use Symfony\Component\Validator\Constraints as Assert;
+    use Symfony\Component\Validator\Constraints;
     
     class UserType extends AbstractType {
         
         public function buildForm(FormBuilderInterface $builder, array $options) {
             
+            $roles = \Model\User::getAvailableRoles();
+
             $builder->add(
                 'email', 
                 'text', 
                 array(
                     'constraints' => array(
-                        new Assert\NotBlank(), 
-                        new Assert\Email()
+                        new Constraints\NotBlank(), 
+                        new Constraints\Email()
                     )
                 )
             )->add(
@@ -39,6 +41,16 @@ namespace WizzieProgress\Form {
             	           'label' => 'Confirm Password'
                     ),
                     'invalid_message' => 'Passwords do not match'
+                )
+            )->add(
+                'userRoles', 
+                'choice',
+                array(
+                    'multiple' => true,
+                    'constraints' => array(
+                        new Constraints\Choice(array('choices' => array_values($roles) , 'multiple' => true ))
+                    ),
+                    'choices' => $roles,
                 )
             );
             

@@ -3,7 +3,8 @@
 namespace Model;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Security\Core\Role\Role;
 /**
  * User
  */
@@ -49,7 +50,13 @@ class User implements \Symfony\Component\Security\Core\User\UserInterface
      */
     private $created;
 
+    const ROLE_USER = 'ROLE_USER';
+    const ROLE_ADMIN = 'ROLE_ADMIN';
 
+
+    public function __construct() {
+        $this->setUserRoles(array(static::ROLE_USER));
+    }
     /**
      * Get id
      *
@@ -145,13 +152,33 @@ class User implements \Symfony\Component\Security\Core\User\UserInterface
     /**
      * Get roles
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Role[]
      */
     public function getRoles()
     {
-        //return $this->roles;
-        return array('ROLE_USER');
+        return $this->roles->map(function($role) {
+            return new Role($role);
+        })->toArray();
     }
+
+    public function getUserRoles() {
+        return $this->roles->toArray();
+    }
+
+    /**
+     * @param array $roles
+     * @return $this
+    */
+    public function setUserRoles( array $roles ) {
+        $this->roles = new ArrayCollection();
+        foreach( $roles as $key => $role )
+        {
+            $this->roles->add( strtoupper( (string)$role ) );
+        }
+
+        return $this;
+    }
+
 
     /**
      * Set first_name
@@ -231,6 +258,28 @@ class User implements \Symfony\Component\Security\Core\User\UserInterface
 
     public function getUsername() {
         return $this->getEmail();
+    }
+
+
+    /**
+     * @return array
+     */
+    public static function getAvailableRoles()
+    {
+        $ref = new \ReflectionClass( get_called_class() );
+        $roles = array();
+
+        foreach( $ref->getConstants() as $name => $val )
+        {
+            if( 'ROLE_' !== substr( $name , 0 , 5 ) )
+            {
+                continue;
+            }
+
+            $roles[$val] = $val;
+        }
+
+        return $roles;
     }
 
 }
