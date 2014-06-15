@@ -46,9 +46,10 @@ namespace WizzieProgress\Form {
                 'userRoles', 
                 'choice',
                 array(
-                    'multiple' => true,
+                    'multiple' => false, /* users can onnly have one role */
+                    'label' => 'User Role',
                     'constraints' => array(
-                        new Constraints\Choice(array('choices' => array_values($roles) , 'multiple' => true ))
+                        new Constraints\Choice(array('choices' => array_values($roles) , 'multiple' => false))
                     ),
                     'choices' => $roles,
                 )
