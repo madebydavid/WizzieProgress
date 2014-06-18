@@ -43,10 +43,10 @@ namespace WizzieProgress\Form {
                     'invalid_message' => 'Passwords do not match'
                 )
             )->add(
-                'userRoles', 
+                'role', 
                 'choice',
                 array(
-                    'multiple' => false, /* users can onnly have one role */
+                    'multiple' => false, /* users can only have one role */
                     'label' => 'User Role',
                     'constraints' => array(
                         new Constraints\Choice(array('choices' => array_values($roles) , 'multiple' => false))

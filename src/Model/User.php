@@ -29,11 +29,11 @@ class User implements \Symfony\Component\Security\Core\User\UserInterface
      * @var string
      */
     private $salt;
-
+    
     /**
-     * @var array
+     * @var string
      */
-    private $roles;
+    private $role;
 
     /**
      * @var string
@@ -55,7 +55,7 @@ class User implements \Symfony\Component\Security\Core\User\UserInterface
 
 
     public function __construct() {
-        $this->setUserRoles(array(static::ROLE_USER));
+        $this->setRole(static::ROLE_USER);
     }
     /**
      * Get id
@@ -137,6 +137,29 @@ class User implements \Symfony\Component\Security\Core\User\UserInterface
     }
 
     /**
+     * Set role
+     *
+     * @param string $role
+     * @return User
+     */
+    public function setRole($role)
+    {
+        $this->role = $role;
+    
+        return $this;
+    }
+
+    /**
+     * Get role
+     *
+     * @return string 
+     */
+    public function getRole()
+    {
+        return $this->role;
+    }
+
+    /**
      * Set roles
      *
      * @param array $roles
@@ -144,7 +167,7 @@ class User implements \Symfony\Component\Security\Core\User\UserInterface
      */
     public function setRoles($roles)
     {
-        $this->roles = $roles;
+        $this->role = (string)$roles[0];
     
         return $this;
     }
@@ -156,29 +179,8 @@ class User implements \Symfony\Component\Security\Core\User\UserInterface
      */
     public function getRoles()
     {
-        return $this->roles->map(function($role) {
-            return new Role($role);
-        })->toArray();
+        return array(new Role($this->role));
     }
-
-    public function getUserRoles() {
-        return $this->roles->toArray();
-    }
-
-    /**
-     * @param array $roles
-     * @return $this
-    */
-    public function setUserRoles( array $roles ) {
-        $this->roles = new ArrayCollection();
-        foreach( $roles as $key => $role )
-        {
-            $this->roles->add( strtoupper( (string)$role ) );
-        }
-
-        return $this;
-    }
-
 
     /**
      * Set first_name
@@ -281,5 +283,7 @@ class User implements \Symfony\Component\Security\Core\User\UserInterface
 
         return $roles;
     }
+
+    
 
 }
