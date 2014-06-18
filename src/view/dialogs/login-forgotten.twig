@@ -6,6 +6,7 @@
     </div>
     <div class="modal-body">
         <p>Please enter your email address to receive a password reset email</p>
+        {{ form_errors(form) }}
         {{ form_row(form.email, {value: lastUsername}) }}
         {{ form_widget(form._token) }}
     </div>

@@ -314,4 +314,60 @@ class User implements \Symfony\Component\Security\Core\User\UserInterface
     {
         return $this->created_by;
     }
+    /**
+     * @var string
+     */
+    private $reset_token;
+
+    /**
+     * @var \DateTime
+     */
+    private $reset_request_date;
+
+
+    /**
+     * Set reset_token
+     *
+     * @param string $resetToken
+     * @return User
+     */
+    public function setResetToken($resetToken)
+    {
+        $this->reset_token = $resetToken;
+    
+        return $this;
+    }
+
+    /**
+     * Get reset_token
+     *
+     * @return string 
+     */
+    public function getResetToken()
+    {
+        return $this->reset_token;
+    }
+
+    /**
+     * Set reset_request_date
+     *
+     * @param \DateTime $resetRequestDate
+     * @return User
+     */
+    public function setResetRequestDate($resetRequestDate)
+    {
+        $this->reset_request_date = $resetRequestDate;
+    
+        return $this;
+    }
+
+    /**
+     * Get reset_request_date
+     *
+     * @return \DateTime 
+     */
+    public function getResetRequestDate()
+    {
+        return $this->reset_request_date;
+    }
 }

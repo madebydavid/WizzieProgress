@@ -18,6 +18,13 @@ Model\User:
         salt:
             type: string
             length: 255
+        reset_token:
+            type: string
+            length: 255
+            nullable: true
+        reset_request_date:
+            type: datetime
+            nullable: true
         role:
             type: string
             length: 255
