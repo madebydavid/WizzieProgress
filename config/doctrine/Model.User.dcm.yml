@@ -33,5 +33,11 @@ Model\User:
         created:
             type: datetime
             columnDefinition: TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    manyToOne:
+        created_by:
+            targetEntity: Model\User
+            joinColumn:
+                name: created_by
+                referencedColumnName: id
     lifecycleCallbacks:
         prePersist: [ eraseCredentials ]

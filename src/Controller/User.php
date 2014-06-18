@@ -47,6 +47,10 @@ namespace Controller {
                         ->encodePassword($user->getPassword(), $user->getSalt())
                 );
                    
+                if (($currentUser = $app['security']->getToken()->getUser()) instanceof \Model\User) {
+                    $user->setCreatedBy($currentUser);
+                }
+                
                 
                 $app['orm.em']->persist($user);
                 $app['orm.em']->flush();

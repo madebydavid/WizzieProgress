@@ -286,4 +286,32 @@ class User implements \Symfony\Component\Security\Core\User\UserInterface
 
     
 
+    /**
+     * @var \Model\User
+     */
+    private $created_by;
+
+
+    /**
+     * Set created_by
+     *
+     * @param \Model\User $createdBy
+     * @return User
+     */
+    public function setCreatedBy(\Model\User $createdBy = null)
+    {
+        $this->created_by = $createdBy;
+    
+        return $this;
+    }
+
+    /**
+     * Get created_by
+     *
+     * @return \Model\User 
+     */
+    public function getCreatedBy()
+    {
+        return $this->created_by;
+    }
 }
