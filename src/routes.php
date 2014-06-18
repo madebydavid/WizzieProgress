@@ -1,7 +1,10 @@
 <?php
 
 $app->mount('/', new Controller\Index());
+
 $app->mount('/login', new Controller\Login());
+
+$app->mount('/login/forgotten', new Controller\LoginForgotten());
 
 $app->mount('/error', new Controller\Error());
 

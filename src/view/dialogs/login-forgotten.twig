@@ -1,0 +1,40 @@
+<form id="forgottenPassword" action="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) }}" method="post" style="margin-bottom: 0px;">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3>Request Password Reset</h3>
+    </div>
+    <div class="modal-body">
+        <p>Please enter your email address to receive a password reset email</p>
+        {{ form_row(form.email) }}
+        {{ form_widget(form._token) }}
+    </div>
+    <div class="modal-footer">
+        <button name="cancel" class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+        <button name="submit" class="btn btn-success">Reset</button>
+    </div>
+    
+</form>
+
+<script>
+
+    $(function() {
+    
+        $(document).ready(function() {
+            $('form#forgottenPassword').submit('click', function(e) {
+                e.preventDefault();
+                $.post(
+                    $(this).attr('action'),
+                    $(this).serialize(),
+                    function(data) {
+                        $('form#forgottenPassword').parent().html(data);
+                    }
+                );
+                
+            });
+        });
+    
+    });
+
+
+</script>

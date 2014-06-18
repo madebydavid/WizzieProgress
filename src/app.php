@@ -44,8 +44,9 @@ use Symfony\Component\DependencyInjection\Reference;
 
 $app['encoder'] = new \Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder();
 $app['security.firewalls'] = array(
-    'admin' => array(
-        'pattern' => '^((?!login/?$).)*$',
+    'global' => array(
+        'pattern' => '^.*$',
+        'anonymous' => true,
         'form' => array('login_path' => '/login', 'check_path' => '/login/check'),
         'logout' => array('logout_path' => '/login/logout', 'target_url' => '/'),
         'users' => $app->share(function($app) {
@@ -67,11 +68,8 @@ $app['security.firewalls'] = array(
             ));
 
         })
-    ),
-    'login' => array(
-        'pattern' => '^/login/?$',
-        'anonymous' => true
     )
+    
 );
 
 $app->register(new Silex\Provider\SecurityServiceProvider(array()));
@@ -81,7 +79,8 @@ $app['security.access_rules'] = array(
     array('^/location(s)', 'ROLE_ADMIN'),
     array('^/student(s)', 'ROLE_USER'),
     array('^/login', 'IS_AUTHENTICATED_ANONYMOUSLY'),
-    array('^/.*', 'IS_AUTHENTICATED_ANONYMOUSLY')
+    array('^/login/forgotten/dialog', 'IS_AUTHENTICATED_ANONYMOUSLY'),
+    array('^/.*', 'ROLE_USER')
 );
 
 $app['security.role_hierarchy'] = array(
