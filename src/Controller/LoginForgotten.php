@@ -13,22 +13,42 @@ namespace Controller {
             
             $controller->get('/dialog', array($this, 'dialog'))->bind('login-forgotten-dialog');
             
+            $controller->post('/dialog', array($this, 'request'))->bind('login-forgotten-request');
+            
             
             return $controller;
-        }
-        
-        
-        public function dialog(Application $app) {
-            return $app['twig']->render('dialogs/login-forgotten.twig', array(
-                'error' => $app['security.last_error']($app['request']),
-                'lastUsername' => $app['session']->get('_security.last_username'),
-                'form' => $this->getForm($app)->createView()
-            ));
         }
         
         private function getForm(Application $app) {
             return $app['form.factory']->create(new \WizzieProgress\Form\LoginForgottenType());
         }
+        
+        public function dialog(Application $app) {
+            return $app['twig']->render('dialogs/login-forgotten.twig', array(
+                'lastUsername' => $app['session']->get('_security.last_username'),
+                'form' => $this->getForm($app)->createView()
+            ));
+        }
+        
+        public function request(Application $app) {
+            
+            $form = $this->getForm($app);
+            $form->bind($app['request']);
+            
+            if ($form->isValid()) {
+            
+                
+                //return $app->redirect($app['url_generator']->generate('users'));
+            }
+            
+            return $app['twig']->render('dialogs/login-forgotten.twig', array(
+                'lastUsername' => $form['email']->getData(),
+                'form' => $form->createView()
+            ));
+            
+        }
+        
+        
         
         
     }
