@@ -42,8 +42,9 @@
         "symfony/config": "~2.3",
         "symfony/translation": "~2.3",
         "symfony/locale": "~2.3",
-	"symfony/intl": "2.3.*@beta",
-        "symfony/security": "~2.3"
+	    "symfony/intl": "2.3.*@beta",
+        "symfony/security": "~2.3",
+        "swiftmailer/swiftmailer": "~4.1"
     },
     "autoload":    {
         "psr-0": {
