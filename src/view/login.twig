@@ -26,7 +26,7 @@
                 <div class="control-group">
                   <div class="controls">
                     <input type="submit" class="btn btn-success" value="Login">
-                    <a href="#" class="btn resetPassword" data-dialog-url="{{ url('login-forgotten-dialog') }}">Forgotten Password</a></td>
+                    <a href="#" class="btn resetPassword" data-dialog-url="{{ url('login-forgotten-request-dialog') }}">Forgotten Password</a></td>
                   </div>
                 </div>
                 </fieldset>
@@ -42,16 +42,39 @@
         $(function() {
             $(document).ready(function() {
             
+                if ('#reset' == window.location.hash) {
+                    
+                    var resetDialogUrl = '{{ passwordResetDialogUrl }}';
+                    
+                    if (0 !== resetDialogUrl.length) {
+                        showLoginDialog(resetDialogUrl);
+                    }
+                    
+                }
+                
                 $('.resetPassword').on('click', function(e) {
                     e.preventDefault();
-                    $.get($(this).data('dialogUrl'), function(data) {
-                        $('#dialogArea').html(data);
-                        $('#dialogArea').modal();
-                    });
+                    
+                    showLoginDialog(
+                        $(this).data('dialogUrl')
+                    );
+                    
                 });
                 
             });
         });
+        
+        
+        function showLoginDialog(url) {
+            $.get(url, function(data) {
+                $('#dialogArea').html(data);
+                $('#dialogArea').modal();
+            });
+        }
+        
+        
+        
+        
     
     </script>
 {% endblock %}

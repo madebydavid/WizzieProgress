@@ -24,8 +24,23 @@ namespace Controller {
         }
         
         public function index(Application $app) {
+            
+            $passwordResetDialogUrl = false;
+            
+            try {
+                if (null != ($token = $app['request']->get('token'))) {
+                    $passwordResetDialogUrl = $app['url_generator']->generate(
+                        'login-forgotten-reset-dialog',
+                         array('token' => $token)
+                    );
+                }
+            } catch (\Exception $e) {
+                /* ignore errors building the url - token param must be invalid */
+            }
+            
             return $app['twig']->render('login.twig', array(
                 'error' => $app['security.last_error']($app['request']),
+                'passwordResetDialogUrl' => $passwordResetDialogUrl,
                 'lastUsername' => $app['session']->get('_security.last_username')
             ));
         }

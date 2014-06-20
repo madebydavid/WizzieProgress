@@ -12,29 +12,57 @@ namespace Controller {
         public function connect(Application $app) {
             $controller = $app['controllers_factory'];
             
-            $controller->get('/dialog', array($this, 'dialog'))->bind('login-forgotten-dialog');
-            $controller->post('/dialog', array($this, 'request'))->bind('login-forgotten-request');
+            /* request password reset email handling */ 
+            $controller->get(
+                '/request', 
+                array($this, 'requestDialog')
+            )->bind('login-forgotten-request-dialog');
             
-            $controller->get('/reset/{token}', array($this, 'reset'))->assert('token', '.{43}')->bind('login-forgotten-reset');
+            $controller->post(
+                '/request', 
+                array($this, 'requestSubmit')
+            )->bind('login-forgotten-request-submit');
+            
+            /* resetting of the password from link in email */
+            $controller->get(
+                '/reset/{token}', 
+                array($this, 'resetDialog')
+            )->assert('token', '.{43}')
+             ->bind('login-forgotten-reset-dialog');
+            
+            $controller->post(
+                '/reset/{token}', 
+                array($this, 'resetSubmit')
+            )->assert('token', '.{43}')
+             ->bind('login-forgotten-reset-submit');
             
             
             return $controller;
         }
         
-        private function getForm(Application $app) {
-            return $app['form.factory']->create(new \WizzieProgress\Form\LoginForgottenType());
+        private function getRequestForm(Application $app) {
+            return $app['form.factory']->create(
+                new \WizzieProgress\Form\LoginForgottenType()
+            );
         }
         
-        public function dialog(Application $app) {
+        private function getResetForm(Application $app) {
+            return $app['form.factory']->create(
+                new \WizzieProgress\Form\LoginResetType()
+            );
+        }
+        
+        
+        public function requestDialog(Application $app) {
             return $app['twig']->render('dialogs/login-forgotten.twig', array(
                 'lastUsername' => $app['session']->get('_security.last_username'),
-                'form' => $this->getForm($app)->createView()
+                'form' => $this->getRequestForm($app)->createView()
             ));
         }
         
-        public function request(Application $app) {
+        public function requestSubmit(Application $app) {
             
-            $form = $this->getForm($app);
+            $form = $this->getRequestForm($app);
             $form->bind($app['request']);
             
             if ($form->isValid()) {
@@ -88,10 +116,58 @@ namespace Controller {
             
         }
         
-        public function reset(Application $app, $token) {
-            var_dump($token);
+        public function resetDialog(Application $app, $token) {
+            return $app['twig']->render('dialogs/login-reset.twig', array(
+                'lastUsername' => $app['session']->get('_security.last_username'),
+                'form' => $this->getResetForm($app)->createView()
+            ));
         }
         
+        public function resetSubmit(Application $app, $token) {
+             
+            $form = $this->getResetForm($app);
+            $form->bind($app['request']);
+            
+            $user = $app['orm.em']->getRepository('Model\User')->findOneBy(
+                    array(
+                        'reset_token' => $token
+                    )
+            );
+            
+            if (null == $user) {
+                $form->addError(new FormError('Invalid or expired reset token'));
+            } else {
+                $seconds = ((new \DateTime())->getTimeStamp() - $user->getResetRequestDate()->getTimeStamp());
+                if ($seconds > $app['config']['admin.options']['resetPasswordTokenValidFor']) {
+                    $form->addError(new FormError('Invalid or expired reset token'));
+                }
+            }
+            
+            if ($form->isValid()) {
+                
+                $user->setSalt(sha1(uniqid(mt_rand(), true)));
+                $user->setPassword(
+                        $app['security.encoder_factory']->getEncoder($user)
+                        ->encodePassword(
+                                $form['password']->getData(), $user->getSalt()
+                        )
+                );
+                
+                $user->setResetToken(null);
+                $user->setResetRequestDate(null);
+                
+                $app['orm.em']->persist($user);
+                $app['orm.em']->flush();
+                
+                return $app['twig']->render('dialogs/close.twig');
+            }
+            
+            return $app['twig']->render('dialogs/login-reset.twig', array(
+                'form' => $form->createView()
+            ));
+            
+            
+        }
         
     }
 }

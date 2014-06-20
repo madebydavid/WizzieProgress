@@ -19,13 +19,24 @@
                     "type": "file"
                 }
             }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "cowboy/jquery-bbq",
+                "version": "1.2.1",
+                "dist": {
+                    "url": "https://raw.githubusercontent.com/cowboy/jquery-bbq/v1.2.1/jquery.ba-bbq.js",
+                    "type": "file"
+                }
+            }
         }
     ],
     "require": {
         "jquery/jquery": "1.7.2",
+        "cowboy/jquery-bbq": "1.2.1",
         "silex/silex": "1.*",
         "twitter/bootstrap": "2.3.*",
-        "symfony/class-loader": "2.3.",
         "silex/web-profiler": "~1.0",
         "symfony/twig-bridge": "~2.2",
         "twig/twig": ">=1.8,<2.0-dev",
