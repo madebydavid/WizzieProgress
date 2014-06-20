@@ -98,6 +98,11 @@ $app->register(new Silex\Provider\HttpCacheServiceProvider(), array(
         'http_cache.cache_dir' => __DIR__.'/../cache/',
 ));
 
+$app->register(new Silex\Provider\SwiftmailerServiceProvider());
+
+$app['swiftmailer.options'] = @$app['config']['swiftmailer.options'];
+
+
 require __DIR__.'/routes.php';
 
 return $app;

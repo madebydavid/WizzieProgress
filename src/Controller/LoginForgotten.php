@@ -15,6 +15,9 @@ namespace Controller {
             $controller->get('/dialog', array($this, 'dialog'))->bind('login-forgotten-dialog');
             $controller->post('/dialog', array($this, 'request'))->bind('login-forgotten-request');
             
+            $controller->get('/reset/{token}', array($this, 'reset'))->assert('token', '.{43}')->bind('login-forgotten-reset');
+            
+            
             return $controller;
         }
         
@@ -56,6 +59,21 @@ namespace Controller {
                     $app['orm.em']->persist($user);
                     $app['orm.em']->flush();
                     
+                    
+                    $message = \Swift_Message::newInstance()
+                        ->setSubject('W2C3 Student Progress App - Password Reset Request')
+                        ->setFrom($app['config']['email.options']['sender'])
+                        ->setTo(array($user->getEmail()))
+                        ->setBody(
+                            $app['twig']->render(
+                                'emails/password-reset.twig', 
+                                array('user' => $user)
+                            )
+                        );
+                    
+                    $app['mailer']->send($message);
+                    
+                    
                     /* this template closes the dialog */
                     return $app['twig']->render('dialogs/close.twig');
                     
@@ -69,6 +87,11 @@ namespace Controller {
             ));
             
         }
+        
+        public function reset(Application $app, $token) {
+            var_dump($token);
+        }
+        
         
     }
 }

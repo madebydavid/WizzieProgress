@@ -24,5 +24,16 @@ $app['config'] = array(
     'admin.options' => array(
         'username' => 'admin',
         'password' => 'david'
+    ),
+    'email.options' => array(
+        'sender' => 'no-reply+wizziewizzie.app@gmail.com'
+    ),
+    'swiftmailer.options' => array(
+        'host' => 'smtp.gmail.com',
+        'port' => '465',
+        'username' => 'wizziewizzie.app@gmail.com',
+        'password' => 'DtHa{4@vOpuR{m9ieiA-%87a3Sn^vl',
+        'encryption' => 'ssl',
+        'auth_mode' => null
     )
 );
