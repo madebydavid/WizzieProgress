@@ -1,1 +1,12 @@
 @CHARSET "ISO-8859-1";
+
+
+.dialogLoading {
+    background-image: url('../img/loading.gif');
+    width: 100px;
+    height: 100px;
+    background-position: center center;
+    background-repeat: no-repeat;
+    margin-left:auto;
+    margin-right: auto;
+}

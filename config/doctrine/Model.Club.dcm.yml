@@ -1,26 +1,28 @@
-#config/doctrine/Model.Location.dcm.yml
-Model\Location:
+#config/doctrine/Model.Club.dcm.yml
+Model\Club:
     type: entity
-    table: location
+    table: club
     fields:
         id:
             type: integer
             id: true
             generator:
                 strategy: AUTO
-        first_name:
-            type: string
-            length: 255
-            nullable: true
-        last_name:
+        name:
             type: string
             length: 255
             nullable: true
         created:
             type: datetime
             columnDefinition: TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    manyToOne:
+        created_by:
+            targetEntity: Model\User
+            joinColumn:
+                name: created_by
+                referencedColumnName: id
     oneToMany:
         students:
             targetEntity: Model\Student
-            mappedBy: location
+            mappedBy: club
             cascade: [ "all" ]

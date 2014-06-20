@@ -15,7 +15,7 @@
                     <ul class="nav">
                         {% if is_granted('ROLE_ADMIN') %}
                             <li{% if 'Users' == block('currentPage') %} class="active"{% endif %}><a href="{{ url('users') }}">Users</a></li>
-                            <li{% if 'Locations' == block('currentPage') %} class="active"{% endif %}><a href="{{ url('locations') }}">Locations</a></li>
+                            <li{% if 'Clubs' == block('currentPage') %} class="active"{% endif %}><a href="{{ url('clubs') }}">Clubs</a></li>
                         {% endif %}
                         {% if is_granted('ROLE_USER') %}
                             <li{% if 'Students' == block('currentPage') %} class="active"{% endif %}><a href="{{ url('students') }}">Students</a></li>

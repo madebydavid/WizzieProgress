@@ -32,7 +32,9 @@
                 </fieldset>
             </form>
             
-            <div id="dialogArea" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+            <div id="dialogArea" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="dialogLoading"></div>
+            </div>
 
 {% endblock %}
 {% block scripts %}
@@ -43,13 +45,10 @@
             $(document).ready(function() {
             
                 if ('#reset' == window.location.hash) {
-                    
                     var resetDialogUrl = '{{ passwordResetDialogUrl }}';
-                    
                     if (0 !== resetDialogUrl.length) {
                         showLoginDialog(resetDialogUrl);
                     }
-                    
                 }
                 
                 $('.resetPassword').on('click', function(e) {
@@ -64,17 +63,12 @@
             });
         });
         
-        
         function showLoginDialog(url) {
+            $('#dialogArea').modal();
             $.get(url, function(data) {
-                $('#dialogArea').html(data);
-                $('#dialogArea').modal();
+               $('#dialogArea').html(data);
             });
         }
-        
-        
-        
-        
     
     </script>
 {% endblock %}

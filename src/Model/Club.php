@@ -5,9 +5,9 @@ namespace Model;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Location
+ * Club
  */
-class Location
+class Club
 {
     /**
      * @var integer
@@ -17,12 +17,7 @@ class Location
     /**
      * @var string
      */
-    private $first_name;
-
-    /**
-     * @var string
-     */
-    private $last_name;
+    private $name;
 
     /**
      * @var \DateTime
@@ -33,6 +28,11 @@ class Location
      * @var \Doctrine\Common\Collections\Collection
      */
     private $students;
+
+    /**
+     * @var \Model\User
+     */
+    private $created_by;
 
     /**
      * Constructor
@@ -53,56 +53,33 @@ class Location
     }
 
     /**
-     * Set first_name
+     * Set name
      *
-     * @param string $firstName
-     * @return Location
+     * @param string $name
+     * @return Club
      */
-    public function setFirstName($firstName)
+    public function setName($name)
     {
-        $this->first_name = $firstName;
+        $this->name = $name;
     
         return $this;
     }
 
     /**
-     * Get first_name
+     * Get name
      *
      * @return string 
      */
-    public function getFirstName()
+    public function getName()
     {
-        return $this->first_name;
-    }
-
-    /**
-     * Set last_name
-     *
-     * @param string $lastName
-     * @return Location
-     */
-    public function setLastName($lastName)
-    {
-        $this->last_name = $lastName;
-    
-        return $this;
-    }
-
-    /**
-     * Get last_name
-     *
-     * @return string 
-     */
-    public function getLastName()
-    {
-        return $this->last_name;
+        return $this->name;
     }
 
     /**
      * Set created
      *
      * @param \DateTime $created
-     * @return Location
+     * @return Club
      */
     public function setCreated($created)
     {
@@ -125,7 +102,7 @@ class Location
      * Add students
      *
      * @param \Model\Student $students
-     * @return Location
+     * @return Club
      */
     public function addStudent(\Model\Student $students)
     {
@@ -152,5 +129,28 @@ class Location
     public function getStudents()
     {
         return $this->students;
+    }
+
+    /**
+     * Set created_by
+     *
+     * @param \Model\User $createdBy
+     * @return Club
+     */
+    public function setCreatedBy(\Model\User $createdBy = null)
+    {
+        $this->created_by = $createdBy;
+    
+        return $this;
+    }
+
+    /**
+     * Get created_by
+     *
+     * @return \Model\User 
+     */
+    public function getCreatedBy()
+    {
+        return $this->created_by;
     }
 }
