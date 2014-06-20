@@ -1,0 +1,26 @@
+{% extends "common/base.twig" %}
+{% block currentPage %}Clubs{% endblock %}
+{% block content %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Created</th>
+                    <th></th> 
+                </tr>
+            </thead>
+            <tbody>
+                {% for club in clubs %}
+                    <tr>
+                        <td>{{club.id}}</td>
+                        <td>{{club.name}}</td>
+                        <td>{{club.created|date("Y-m-d H:i:s")}}</td>
+                        <td><a href="{{ url('club', {id: club.id}) }}">Edit</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% include "common/pagination.twig" %}
+        <a href="{{ url('club', {id: 0}) }}" class="btn">Create New Club</a>
+{% endblock %}

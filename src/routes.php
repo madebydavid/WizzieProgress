@@ -12,5 +12,5 @@ $app->mount('/students', new Controller\Students());
 //$app->mount('/student', new Controller\Student());
 
 $app->mount('/clubs', new Controller\Clubs());
-//$app->mount('/location', new Controller\Location());
+$app->mount('/club', new Controller\Club());
 

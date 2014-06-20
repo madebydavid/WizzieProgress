@@ -1,0 +1,8 @@
+{% extends "common/base.twig" %}
+{% block currentPage %}Club{% endblock %}
+{% block content %}
+        <form action="#" method="post">
+            {{ form_widget(form) }}
+            <input type="submit" name="submit" class="btn" />
+        </form>
+{% endblock %}
