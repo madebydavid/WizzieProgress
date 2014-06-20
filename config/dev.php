@@ -32,7 +32,7 @@ $app['config'] = array(
         'host' => 'smtp.gmail.com',
         'port' => '465',
         'username' => 'wizziewizzie.app@gmail.com',
-        'password' => 'DtHa{4@vOpuR{m9ieiA-%87a3Sn^vl',
+        'password' => '',
         'encryption' => 'ssl',
         'auth_mode' => null
     )
